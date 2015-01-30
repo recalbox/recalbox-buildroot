@@ -1,0 +1,5 @@
+Changed :
+	- emulationstation branch is now recalbox-buildroot-arcade
+	- added serial script (nedd to enable it manually)
+	- language fr default
+	- gpio activated default
