@@ -4,7 +4,7 @@ case "$1" in
 	if [[ ! -f /root/serial.txt ]]; then
 		cat /proc/cpuinfo | grep "Serial" > /root/serial.txt
 	else
-		cat /proc/cpuinfo | grep "Serial" | grep `cat /root/serial.txt`
+		cat /proc/cpuinfo | grep "`cat /root/serial.txt`"
 		if [ $? == 0 ]; then 
 			echo "SERIAL OK" > /root/serial.log
 		else
