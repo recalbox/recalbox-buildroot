@@ -1,24 +1,28 @@
 #!/bin/bash
 case "$1" in
   start)
-	if [[ ! -f /root/serial.txt ]]; then
-		cat /proc/cpuinfo | grep "Serial" > /root/serial.txt
-	else
-		cat /proc/cpuinfo | grep "`cat /root/serial.txt`"
-		if [ $? == 0 ]; then 
-			echo "SERIAL OK" > /root/serial.log
-		else
-			echo "SERIAL VERIFICATION FAILED" > /root/serial.log
-			poweroff
-		fi
-	fi
-	;;
+        if [[ ! -f /root/serial.txt ]]; then
+                cat /proc/cpuinfo | grep "Serial"
+                if [ $? != 0 ];then
+                        ( sleep 10; reboot ) &
+                else
+                        cat /proc/cpuinfo | grep "Serial" > /root/serial.txt
+                fi
+        else
+                cat /root/serial.txt | grep "`cat /proc/cpuinfo | grep Serial`"
+                if [ $? == 0 ]; then
+                        echo "SERIAL OK" > /root/serial.log
+                else
+                        echo "SERIAL VERIFICATION FAILED" > /root/serial.log
+                        poweroff
+                fi
+        fi
+        ;;
   stop)
-	;;
+        ;;
   restart|reload)
-	;;
+        ;;
   *)
 esac
 
 exit $?
-
