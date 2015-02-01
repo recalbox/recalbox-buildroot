@@ -7,7 +7,7 @@
 			<path>./sounds/system.ogg</path>
 		</sound>
 		<image name="background" extra="true">
-			<path>./art/gen_art_blur.jpg</path>
+			<path>./art/gen_cab.jpg</path>
 		</image>
 
 		<image name="logo">
@@ -15,15 +15,15 @@
         </image>
 		
 		<helpsystem name="help">
-			<textColor>00000088</textColor>
-			<iconColor>00000088</iconColor>
+			<textColor>FFFFFF88</textColor>
+			<iconColor>FFFFFF88</iconColor>
 		</helpsystem>
 		
 	</view>
 
 	<view name="basic, detailed">
  <image name="background">
-                        <path>./art/gen_art_blur.jpg</path>
+                        <path>./art/gen_cab.jpg</path>
                 </image>	
 		<text name="system_name_1" extra="true">
 			<text>SEGA Mega Drive</text>
