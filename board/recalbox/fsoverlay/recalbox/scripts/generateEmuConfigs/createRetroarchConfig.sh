@@ -17,8 +17,8 @@ function createRetroarchConfig {
 
 
 	declare -A retroarchbtn
-	retroarchbtn['a']='a'
-	retroarchbtn['b']='b'
+	retroarchbtn['b']='a'
+	retroarchbtn['a']='b'
 	retroarchbtn['x']='x'
 	retroarchbtn['y']='y'
 	retroarchbtn['pageup']='l'

@@ -19,8 +19,8 @@ function createFBAConfig {
 
 	# fba2x
 	declare -A fbabtn
-	fbabtn['a']='Y'
-	fbabtn['b']='X'
+	fbabtn['b']='Y'
+	fbabtn['a']='X'
 	fbabtn['x']='B'
 	fbabtn['y']='A'
 	fbabtn['pageup']='L'
@@ -29,8 +29,8 @@ function createFBAConfig {
 	fbabtn['select']='SELECT'
 
 	declare -A fba6btn
-	fba6btn['a']='L'
-	fba6btn['b']='Y'
+	fba6btn['b']='L'
+	fba6btn['a']='Y'
 	fba6btn['x']='X'
 	fba6btn['y']='A'
 	fba6btn['pageup']='B'
