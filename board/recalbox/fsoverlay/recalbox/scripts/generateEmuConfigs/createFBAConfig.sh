@@ -57,7 +57,7 @@ function createFBAConfig {
 	fbaHatToAxis['8']='LR'
 
 	declare -A fbaspecials
-	fbaspecials['start']='QUIT'
+	fbaspecials['pagedown']='QUIT'
 	fbaspecials['hotkey']='HOTKEY'
 
 	#6buttons

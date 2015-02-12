@@ -32,7 +32,7 @@
 	retroarchspecials['y']='save_state'
 	retroarchspecials['pageup']='screenshot'
 	retroarchspecials['b']='menu_toggle'
-	retroarchspecials['start']='exit_emulator'
+	retroarchspecials['pagedown']='exit_emulator'
 
 	retroarchspecials['up']='state_slot_increase'
 	retroarchspecials['down']='state_slot_decrease'
