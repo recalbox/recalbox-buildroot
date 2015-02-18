@@ -1,13 +1,14 @@
 #!/bin/bash
 
 if [ ! "$1" ];then
-	echo -e "usage : recalbox-config.sh [command] [args]\nWith command in\n\toverscan [enable|disable]\n\toverclock [none|high|turbo|extrem]\n\taudio [hdmi|jack|auto]\n\tcanupdate\n\tupdate"
+	echo -e "usage : recalbox-config.sh [command] [args]\nWith command in\n\toverscan [enable|disable]\n\toverclock [none|high|turbo|extrem]\n\taudio [hdmi|jack|auto]\n\tcanupdate\n\tupdate\n\twifi [enable|disable] ssid key"
 	exit 1
 fi
 configFile="/boot/config.txt"
 command="$1"
 mode="$2"
 log=/root/recalbox.log
+wpafile=/etc/wpa_supplicant/wpa_supplicant.conf
 
 echo "---- recalbox-config.sh ----" >> $log
 
@@ -173,4 +174,31 @@ if [ "$command" == "update" ];then
 	exit $?
 fi
 
+if [[ "$command" == "wifi" ]]; then
+        if [[ ! -f "$wpafile" ]];then
+                echo "$wpafile do not exists" >> $log
+                exit 1
+        fi
+        ssid=$3
+        psk=$4
+
+        if [[ "$mode" == "enable" ]]; then
+                echo "enabling wifi" >> $log
+                cat $wpafile | grep network
+                if [ "$?" != "0" ]; then
+                        echo "creating network entry in $wpafile" >> $log
+                        echo -e "network={\n\tssid=\"\"\n\tpsk=\"\"\n}" >> $wpafile
+                fi
+                sed -i "s/ssid=\".*\"/ssid=\"$ssid\"/g" $wpafile
+                sed -i "s/psk=\".*\"/psk=\"$psk\"/g" $wpafile
+                /etc/init.d/S42networkrestart restart
+                exit 0
+        fi
+        if [[ "$mode" == "disable" ]]; then
+                sed -i "s/ssid=\".*\"/ssid=\"\"/g" $wpafile
+                sed -i "s/psk=\".*\"/psk=\"\"/g" $wpafile
+                ifdown wlan0
+                exit $?
+        fi
+fi
 exit 10
