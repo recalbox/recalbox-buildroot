@@ -62,7 +62,7 @@ if [ "$a_system" == "fba" ];then
     createFBAConfig "$a_guid3" "3" "$a_name3"
     createFBAConfig "$a_guid4" "4" "$a_name4"
     setFBAJoypadIndexes "$a_name1" "$a_name2" "$a_name3" "$a_name4"
-    setFBASmooth
+    setFBAExtraConfig
 elif [ "$a_system" == "n64" ];then
     createMupen64Config "$a_guid1" "1" "$a_udev1"
 else
@@ -72,7 +72,7 @@ else
     createRetroarchConfig "$a_guid4" "4" "$a_name4"
     clearRetroarchJoypadIndexes
     setRetroarchJoypadIndexes "$a_udev1" "$a_name1" "$a_udev2" "$a_name2" "$a_udev3" "$a_name3" "$a_udev4" "$a_name4"
-    setRetroarchSmooth
+    setRetroarchExtraConfigs
 fi
 
 if [ "$a_system" == "mame" ];then
