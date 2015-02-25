@@ -57,8 +57,8 @@ function createFBAConfig {
 	fbaHatToAxis['8']='LR'
 
 	declare -A fbaspecials
-	fbaspecials['pagedown']='QUIT'
-	fbaspecials['hotkey']='HOTKEY'
+	fbaspecials['pagedown']='HOTKEY'
+	fbaspecials['hotkey']='QUIT'
 
 	#6buttons
         for rawinput in $inputs; do
