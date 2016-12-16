@@ -1,0 +1,34 @@
+#! /bin/sh
+#
+# Start virtual-gamepads
+#
+
+systemsetting="python /usr/lib/python2.7/site-packages/configgen/settings/recalboxSettings.pyc"
+
+case "$1" in
+  start)
+    enabled="`$systemsetting  -command load -key controllers.steam.enabled`"
+    if [ "$enabled" == "0" ];then
+      echo "Steam-controller services: disabled"
+      exit 0
+    fi
+    
+    echo "Starting Steam-controller server"
+    /usr/bin/sc-xbox.py start
+    ;;
+  stop)
+    echo -n "Stopping Steam-controller server"
+    /usr/bin/sc-xbox.py stop
+    ;;
+  restart|reload)
+    $0 stop
+    $0 start
+    ;;
+  *)
+    echo "Usage: $0 {start|stop|restart|reload}"
+    exit 1
+    ;;
+esac
+
+exit 0
+

@@ -1,0 +1,9 @@
+config BR2_PACKAGE_STEAMCONTROLLER
+        bool "steam controller driver"
+	depends on BR2_PACKAGE_PYTHON
+	select BR2_PACKAGE_PYTHON_ENUM34
+	select BR2_PACKAGE_PYTHON_LIBUSB1
+        help
+	  Steam Controller Support
+	  https://github.com/ynsta/steamcontroller
+
