@@ -4,7 +4,7 @@ Put your fba libretro roms in this directory (cps3 support, updated version, but
 
 The roms version must be 0.2.97.39
 
-Rom files must have a ".zip" or ".fba" extension.
+Rom files must have an ".iso", ".zip" or ".7z" extension.
 
 The file fba_libretro_gamelist.txt list compatible games.
 
