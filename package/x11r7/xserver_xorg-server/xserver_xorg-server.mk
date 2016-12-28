@@ -56,13 +56,16 @@ XSERVER_XORG_SERVER_DEPENDENCIES = 	\
 	mcookie 			\
 	host-pkgconf
 
+# We force -O2 regardless of the optimization level chosen by the
+# user, as the X.org server is known to trigger some compiler bugs at
+# -Os on several architectures.
 XSERVER_XORG_SERVER_CONF_OPTS = \
 	--disable-config-hal \
 	--disable-xnest \
 	--disable-xephyr \
 	--disable-dmx \
 	--with-builder-addr=buildroot@buildroot.org \
-	CFLAGS="$(TARGET_CFLAGS) -I$(STAGING_DIR)/usr/include/pixman-1" \
+	CFLAGS="$(TARGET_CFLAGS) -I$(STAGING_DIR)/usr/include/pixman-1 -O2" \
 	--with-fontrootdir=/usr/share/fonts/X11/ \
 	--$(if $(BR2_PACKAGE_XSERVER_XORG_SERVER_XVFB),en,dis)able-xvfb
 
@@ -70,11 +73,21 @@ ifeq ($(BR2_PACKAGE_SYSTEMD),y)
 XSERVER_XORG_SERVER_CONF_OPTS += \
 	--with-systemd-daemon \
 	--enable-systemd-logind
-XSERVER_XORG_SERVER_DEPENDENCIES += systemd
+XSERVER_XORG_SERVER_DEPENDENCIES += \
+	systemd \
+	xproto_dri2proto
 else
 XSERVER_XORG_SERVER_CONF_OPTS += \
 	--without-systemd-daemon \
 	--disable-systemd-logind
+endif
+
+# Xwayland support needs libdrm, libepoxy, wayland and libxcomposite
+ifeq ($(BR2_PACKAGE_LIBDRM)$(BR2_PACKAGE_LIBEPOXY)$(BR2_PACKAGE_WAYLAND)$(BR2_PACKAGE_XLIB_LIBXCOMPOSITE),yyyy)
+XSERVER_XORG_SERVER_CONF_OPTS += --enable-xwayland
+XSERVER_XORG_SERVER_DEPENDENCIES += libdrm libepoxy wayland xlib_libXcomposite
+else
+XSERVER_XORG_SERVER_CONF_OPTS += --disable-xwayland
 endif
 
 # Present protocol only required for xserver 1.15+, but does not matter if
@@ -203,7 +216,7 @@ endif
 ifeq ($(BR2_PACKAGE_XPROTO_DRI3PROTO),y)
 XSERVER_XORG_SERVER_DEPENDENCIES += xlib_libxshmfence xproto_dri3proto
 XSERVER_XORG_SERVER_CONF_OPTS += --enable-dri3
-ifeq ($(BR2_PACKAGE_LIBEPOXY),y)
+ifeq ($(BR2_PACKAGE_HAS_LIBGL)$(BR2_PACKAGE_LIBEPOXY),yy)
 XSERVER_XORG_SERVER_DEPENDENCIES += libepoxy
 XSERVER_XORG_SERVER_CONF_OPTS += --enable-glamor
 endif
