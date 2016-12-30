@@ -14,11 +14,13 @@ case "$1" in
     fi
     
     echo "Starting Steam-controller server"
-    /usr/bin/sc-xbox.py start
+    /usr/bin/sc-xbox.py start &
+    exit 0
     ;;
   stop)
     echo -n "Stopping Steam-controller server"
-    /usr/bin/sc-xbox.py stop
+    /usr/bin/sc-xbox.py stop &
+    exit 0
     ;;
   restart|reload)
     $0 stop
