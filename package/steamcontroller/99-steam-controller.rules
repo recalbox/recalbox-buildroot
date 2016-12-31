@@ -1,0 +1,6 @@
+# replace game group by a valid group on your system
+# Steam controller keyboard/mouse mode
+SUBSYSTEM=="usb", ATTRS{idVendor}=="28de", MODE="0660"
+
+# Steam controller gamepad mode
+KERNEL=="uinput", MODE="0660", OPTIONS+="static_node=uinput"
