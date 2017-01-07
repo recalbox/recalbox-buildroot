@@ -9,7 +9,7 @@ stages:
   stage: build
   script:
     - docker build -t recalbox-${ARCH} . 
-    - docker run --rm -v `pwd`:/work -v /recalbox-builds/dl:/share/dl -v /recalbox-builds/hosts/host-${ARCH}:/share/host -e "ARCH=$ARCH" recalbox-${ARCH} -e "RECALBOX_VERSION_LABEL=${CI_BUILD_REF_SLUG}-${ARCH}-build-${CI_BUILD_ID}" -e "RECALBOX_UPDATE_MESSAGE='automatic build ${CI_BUILD_REF_SLUG}-${ARCH}-build-${CI_BUILD_ID}'" >> build.log 2>&1
+    - docker run --rm -v `pwd`:/work -v /recalbox-builds/dl:/share/dl -v /recalbox-builds/hosts/host-${ARCH}:/share/host -e "ARCH=$ARCH" -e "RECALBOX_VERSION_LABEL=${CI_BUILD_REF_SLUG}-${ARCH}-build-${CI_BUILD_ID}" -e "RECALBOX_UPDATE_MESSAGE='automatic build ${CI_BUILD_REF_SLUG}-${ARCH}-build-${CI_BUILD_ID}'" recalbox-${ARCH} >> build.log 2>&1
     - tail -n 200 build.log
     - ls output/images/recalbox/
     - mkdir -p dist/${ARCH}
