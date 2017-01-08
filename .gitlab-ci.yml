@@ -13,10 +13,10 @@ stages:
     - tail -n 200 build.log
     - ls output/images/recalbox/
     - mkdir -p dist/${ARCH}
-    - for file in `ls dist/${ARCH}/`;do sha1sum dist/${ARCH}/${file} > dist/${ARCH}/${file}.sha1; done
-    - tar tf output/images/recalbox/root.tar.xz | sort > "dist/${ARCH}/root.list"
-    - echo "${CI_BUILD_REF_SLUG}-${ARCH}-build-${CI_BUILD_ID}" >> dist/${ARCH}/recalbox.version
     - cp output/images/recalbox/* dist/${ARCH}
+    - for file in `ls dist/${ARCH}/`;do sha1sum dist/${ARCH}/${file} > dist/${ARCH}/${file}.sha1; done
+    - tar tf dist/${ARCH}/root.tar.xz | sort > dist/${ARCH}/root.list
+    - echo "${CI_BUILD_REF_SLUG}-${ARCH}-build-${CI_BUILD_ID}" >> dist/${ARCH}/recalbox.version
   artifacts:
     name: dist-${ARCH}-${CI_BUILD_ID}
     when: always
