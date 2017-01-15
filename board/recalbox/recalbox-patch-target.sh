@@ -36,7 +36,6 @@ mkdir "${TARGET_DIR}/"{var,run,sys,tmp}  || exit 1
 
 # Add the date while the version can be nightly or unstable
 RVERSION=$(cat "${TARGET_DIR}/recalbox/recalbox.version")
-echo "${RVERSION} "$(date "+%Y/%m/%d %H:%M") > "${TARGET_DIR}/recalbox/recalbox.version"
 
 # bootsplash
 TGVERSION=$(cat "${TARGET_DIR}/recalbox/recalbox.version")
