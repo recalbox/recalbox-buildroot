@@ -156,18 +156,6 @@ do_upgrade() {
 	fi
 	sync
     fi
-    if test "${EXIT_CODE}" = 1
-    then
-        # Case update failed, reboot one time
-        if test -e /recalbox/update.retry
-        then
-            rm /recalbox/update.retry
-        else
-            touch /recalbox/update.retry
-            shutdown -r now
-            return 1
-        fi
-    fi
     test "${EXIT_CODE}" = 1 && return 1 # don't insist if /root failed to upgrade
 
     echo "Upgrade ended successfully."
@@ -229,12 +217,21 @@ then
     # let's go
     scr_init_upgrade
     do_upgrade > /recalbox/share/system/upgrade/upgrade.out.log 2> /recalbox/share/system/upgrade/upgrade.err.log
-    
-    # remove to not apply it indefinitly, even if it fails
-    rm "/recalbox/share/system/upgrade/boot.tar.xz" "/recalbox/share/system/upgrade/root.tar.xz"
-    
-    # rebooting now
-    shutdown -r now
+    if test "$?" != 0
+    then
+        # Case update failed, reboot one time
+        if test -e /recalbox/update.retry
+        then
+            rm /recalbox/update.retry
+            # remove to not apply it indefinitly, even if it fails
+            rm "/recalbox/share/system/upgrade/boot.tar.xz" "/recalbox/share/system/upgrade/root.tar.xz"
+        else
+            touch /recalbox/update.retry
+	    sync
+            shutdown -r now
+            return 1
+        fi
+    fi
 fi
 
 # now, let mount delayed usbmount devices
