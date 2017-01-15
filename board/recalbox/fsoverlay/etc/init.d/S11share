@@ -148,6 +148,7 @@ do_upgrade() {
     then
 	if (cd / && \
 	    cp ./etc/fstab ./etc/fstab.upgrade && \
+            rm -rf /usr/share/lirc/contrib/lircrc && \
 	    xz -dc < "${ROOTTAR}" | tar xvf - >> /tmp/upgrade.files && \
 	    mv ./etc/fstab.upgrade ./etc/fstab)
 	then
