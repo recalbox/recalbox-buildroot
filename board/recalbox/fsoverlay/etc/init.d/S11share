@@ -156,6 +156,18 @@ do_upgrade() {
 	fi
 	sync
     fi
+    if test "${EXIT_CODE}" = 1
+    then
+        # Case update failed, reboot one time
+        if test -e /recalbox/update.retry
+        then
+            rm /recalbox/update.retry
+        else
+            touch /recalbox/update.retry
+            shutdown -r now
+            return 1
+        fi
+    fi
     test "${EXIT_CODE}" = 1 && return 1 # don't insist if /root failed to upgrade
 
     echo "Upgrade ended successfully."
