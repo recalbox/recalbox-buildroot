@@ -2,7 +2,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unrelease][unreleased]
+## [4.0.1] - 2017-01-15
+- Fixed upgrade process
+- Fixes nes 30 controller default layout
+- Added support for rpi2v1.2
+
+## [4.0.0] - 2016-11-26
 - Reenable mp3 support for SDL2 mixer.
 - Solve the loading of the DB9 driver
 - N64 configgen shouldn't crash anymore if some keys are not mapped
