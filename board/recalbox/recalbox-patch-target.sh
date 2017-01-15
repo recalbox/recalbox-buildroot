@@ -41,3 +41,5 @@ RVERSION=$(cat "${TARGET_DIR}/recalbox/recalbox.version")
 TGVERSION=$(cat "${TARGET_DIR}/recalbox/recalbox.version")
 convert "${TARGET_DIR}/recalbox/system/resources/splash/logo.png" -fill white -pointsize 30 -annotate +50+1020 "${TGVERSION}" "${TARGET_DIR}/recalbox/system/resources/splash/logo-version.png" || exit 1
 convert "${TARGET_DIR}/recalbox/system/resources/splash/logo.png" -fill white -pointsize 60 -gravity center -annotate +0+0 "Upgrading the system\nPlease wait..." "${TARGET_DIR}/recalbox/system/resources/splash/logo-upgrade.png" || exit 1
+# Changelog
+cp "${BASE_DIR}/CHANGELOG.md" "${TARGET_DIR}/recalbox/recalbox.changelog"
