@@ -231,7 +231,7 @@ then
             /update/busybox touch /recalbox/update.retry
 	    /update/busybox sync
             /update/busybox shutdown -r now
-            return 1
+            exit 1
         fi
     else
         /update/busybox rm "/recalbox/share/system/upgrade/boot.tar.xz" "/recalbox/share/system/upgrade/root.tar.xz"
