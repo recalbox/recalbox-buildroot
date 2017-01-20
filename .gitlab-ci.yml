@@ -75,71 +75,6 @@ build odroidxu4:
   variables:
     ARCH: 'odroidxu4'
 
-# Pull requests : manual build and deploy
-build rpi1 for test:
-  <<: *build_definition
-  when: manual
-  only:
-    - branches
-  except:
-    - master
-  variables:
-    ARCH: 'rpi1'
-build rpi2 for test:
-  <<: *build_definition
-  when: manual
-  only:
-    - branches
-  except:
-    - master
-  variables:
-    ARCH: 'rpi2'
-build rpi3 for test:
-  <<: *build_definition
-  when: manual
-  only:
-    - branches
-  except:
-    - master
-  variables:
-    ARCH: 'rpi3'
-build x86_64 for test:
-  <<: *build_definition
-  when: manual
-  only:
-    - branches
-  except:
-    - master
-  variables:
-    ARCH: 'x86_64'
-build x86 for test:
-  <<: *build_definition
-  when: manual
-  only:
-    - branches
-  except:
-    - master
-  variables:
-    ARCH: 'x86'
-build odroidc2 for test:
-  <<: *build_definition
-  when: manual
-  only:
-    - branches
-  except:
-    - master
-  variables:
-    ARCH: 'ordoidc2'
-build odroidxu4 for test:
-  <<: *build_definition
-  when: manual
-  only:
-    - branches
-  except:
-    - master
-  variables:
-    ARCH: 'ordoidxu4'
-
 .release_template: &release_definition
   stage: release
   script:
@@ -166,10 +101,8 @@ release stable:
     RELEASE_DIR: '4.1'
     RELEASE_TYPE: 'stable'
 
-
 release for test:
   <<: *release_definition
-  when: manual
   only:
     - branches
     - tags
@@ -178,6 +111,9 @@ release for test:
   variables:
     RELEASE_DIR: "gitlab/${CI_BUILD_REF_SLUG}"
     RELEASE_TYPE: 'unstable'
+  environment:
+    name: review/${CI_BUILD_REF_SLUG}
+    on_stop: clean tests from archive
 
 clean tests from archive:
   stage: clean
@@ -191,4 +127,6 @@ clean tests from archive:
     - echo "cleaning archive.recalbox.com/gitlab/${CI_BUILD_REF_SLUG}"
     - echo "${RECALBOX_ARCHIVE_SSH_KEY}" > recalbox-archive-key && chmod 400 recalbox-archive-key
     - docker run --rm -v `pwd`:/share -w /share digitallumberjack/docker-sshd ssh -p 10022 -o StrictHostKeyChecking=no -i recalbox-archive-key $ARCHIVE_SERVER "rm -rf /recalbox-archive/gitlab/${CI_BUILD_REF_SLUG}"
-
+  environment:
+    name: review/${CI_BUILD_REF_SLUG}
+    action: stop
