@@ -285,6 +285,7 @@ menu "Libretro Cores"
        source "package/libretro-hatari/Config.in"
        source "package/libretro-quicknes/Config.in"
        source "package/libretro-glupen64/Config.in"
+       source "package/libretro-snes9x/Config.in"
 endmenu
 endif
 menu "Doom packages"
