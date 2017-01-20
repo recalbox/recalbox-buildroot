@@ -97,29 +97,23 @@ scr_init_upgrade() {
 }
 
 scr_msg_upgrade() {
-    /update/busybox printf "\r%20s%10s" "${1}" " " > /dev/tty0 # with spaces at the begining for screen not displaying the left ; and spaces on right to erase old msg
+    printf "\r%20s%10s" "${1}" " " > /dev/tty0 # with spaces at the begining for screen not displaying the left ; and spaces on right to erase old msg
 }
 
 do_upgrade() {
     BOOTTAR="/recalbox/share/system/upgrade/boot.tar.xz"
     ROOTTAR="/recalbox/share/system/upgrade/root.tar.xz"
-    if ! mount -o remount,rw /
-    then
-        return 1
-    fi
-    mkdir -p /update
-    cp /bin/busybox /update/busybox
-    
+
     # percentage
     touch /tmp/upgrade.files
     (
-	/update/busybox sleep 1 # wait screen background initialized before
+	sleep 1 # wait screen background initialized before
 	while true
 	do
-	    NF=$(/update/busybox cat /tmp/upgrade.files | wc -l)
+	    NF=$(cat /tmp/upgrade.files | wc -l)
 	    let NP=${NF}00/${NB_FILES_TARGET}
 	    scr_msg_upgrade "${NP}%"
-	    /update/busybox sleep 10
+	    sleep 10
 	done
     ) &
     
@@ -150,19 +144,22 @@ do_upgrade() {
     EXIT_CODE=1
     date
     echo "Upgrading /"
+    if mount -o remount,rw /
+    then
 	if (cd / && \
 	    cp ./etc/fstab ./etc/fstab.upgrade && \
             rm -rf /usr/share/lirc/contrib/lircrc && \
-	    /update/busybox xz -dc < "${ROOTTAR}" | /update/busybox tar xvf - >> /tmp/upgrade.files && \
-	    /update/busybox mv ./etc/fstab.upgrade ./etc/fstab)
+	    xz -dc < "${ROOTTAR}" | tar xvf - >> /tmp/upgrade.files && \
+	    mv ./etc/fstab.upgrade ./etc/fstab)
 	then
 	    EXIT_CODE=0
 	fi
-	/update/busybox sync
+	sync
+    fi
     test "${EXIT_CODE}" = 1 && return 1 # don't insist if /root failed to upgrade
 
-    /update/busybox echo "Upgrade ended successfully."
-    /update/busybox date
+    echo "Upgrade ended successfully."
+    date
     return 0
 }
 
@@ -220,23 +217,12 @@ then
     # let's go
     scr_init_upgrade
     do_upgrade > /recalbox/share/system/upgrade/upgrade.out.log 2> /recalbox/share/system/upgrade/upgrade.err.log
-    if test "$?" != 0
-    then
-        # Case update failed, reboot one time without removing the boot and root
-        if test -e /recalbox/update.retry
-        then
-            /update/busybox rm /recalbox/update.retry
-            /update/busybox rm "/recalbox/share/system/upgrade/boot.tar.xz" "/recalbox/share/system/upgrade/root.tar.xz"
-        else
-            /update/busybox touch /recalbox/update.retry
-	    /update/busybox sync
-            /update/busybox shutdown -r now
-            exit 1
-        fi
-    else
-        /update/busybox rm "/recalbox/share/system/upgrade/boot.tar.xz" "/recalbox/share/system/upgrade/root.tar.xz"
-        /update/busybox shutdown -r now
-    fi
+    
+    # remove to not apply it indefinitly, even if it fails
+    rm "/recalbox/share/system/upgrade/boot.tar.xz" "/recalbox/share/system/upgrade/root.tar.xz"
+    
+    # rebooting now
+    shutdown -r now
 fi
 
 # now, let mount delayed usbmount devices
@@ -250,4 +236,3 @@ ls /var/run/usbmount.delay |
 	 rm "/var/run/usbmount.delay/${RULE}")
     done
 touch /var/run/recalbox.share.mounted # reenable standard usbmount
-
