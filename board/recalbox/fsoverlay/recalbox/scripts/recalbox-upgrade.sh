@@ -43,4 +43,16 @@ then
     exit 1
 fi
 
+for file in root.tar.xz boot.tar.xz; do
+    # the file may not have a .sha1, so skip in that case
+    wget ${recalboxupdateurl}/${majorversion}/${arch}/${updatetype}/last/${file}.sha1 -O /recalbox/share/system/upgrade/${file}.sha1 || continue
+    computedSum=`sha1sum /recalbox/share/system/upgrade/${file} | cut -d ' ' -f 1`
+    buildSum=`cat /recalbox/share/system/upgrade/${file}.sha1 | cut -d ' ' -f 1`
+    if [[ $computedSum != $buildSum ]]; then
+        recallog -e "Checksums differ for ${file}. Aborting upgrade !"
+        rm -rf /recalbox/share/system/upgrade/*
+        exit 8
+    fi
+done
+
 exit 0
