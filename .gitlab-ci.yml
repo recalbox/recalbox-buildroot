@@ -23,7 +23,7 @@ stages:
     paths:
       - dist/${ARCH}
       - build.log
-    expires_in: 2 mos
+    expire_in: 2 mos
 
 build rpi1:
   <<: *build_definition
