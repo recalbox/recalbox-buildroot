@@ -9,7 +9,7 @@ case "$1" in
   start)
 	enabled="`$systemsetting -command load -key system.es.atstartup`"
 	videoMode="`$systemsetting -command load -key system.es.videomode`"
-	esArgs="`test $($systemsetting -command load -key system.es.hidesystemview) = "true" && echo --hide-systemview`"
+	esArgs="`test $($systemsetting -command load -key system.es.hidesystemview) = "1" && echo --hide-systemview`"
         if [ "$enabled" != "0" ];then
 		echo $videoMode | grep -qE "(CEA|DMT) [0-9]{1,2} (HDMI|DVI)"
 		[ $? = "0" ] && tvservice -e "$videoMode"
