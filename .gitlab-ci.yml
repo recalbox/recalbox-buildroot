@@ -10,7 +10,7 @@ stages:
   script:
     - export RECALBOX_VERSION=${CI_BUILD_TAG:-${CI_BUILD_REF_SLUG}-${ARCH}-build-${CI_BUILD_ID}}
     - docker build -t recalbox-${ARCH} . 
-    - docker run --rm -v `pwd`:/work -v /recalbox-builds/dl:/share/dl -v /recalbox-builds/hosts/host-${ARCH}:/share/host -v /recalbox-builds/ccache:/share/ccache -e "ARCH=$ARCH" -e "RECALBOX_VERSION_LABEL=$RECALBOX_VERSION" -e "RECALBOX_CCACHE_DIR=/share/ccache" recalbox-${ARCH} >> build.log 2>&1
+    - docker run --rm -v `pwd`:/work -v /recalbox-builds/dl:/share/dl -v /recalbox-builds/hosts/host-${ARCH}:/share/host -v /recalbox-builds/ccaches/ccache-${ARCH}:/share/ccache -e "ARCH=$ARCH" -e "RECALBOX_VERSION_LABEL=$RECALBOX_VERSION" -e "RECALBOX_CCACHE_DIR=/share/ccache" recalbox-${ARCH} >> build.log 2>&1
     - tail -n 200 build.log
     - mkdir -p dist/${ARCH}
     - cp output/images/recalbox/* dist/${ARCH}
