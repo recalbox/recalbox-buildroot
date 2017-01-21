@@ -106,7 +106,16 @@ scr_msg_upgrade() {
 do_upgrade() {
     BOOTTAR="/recalbox/share/system/upgrade/boot.tar.xz"
     ROOTTAR="/recalbox/share/system/upgrade/root.tar.xz"
-    
+    # Verify checksums
+    filesToCheck="boot.tar.xz root.tar.xz"
+    for file in $filesToCheck; do
+        computedSum=`sha1sum /recalbox/share/system/upgrade/${file} | cut -d ' ' -f 1`
+        buildSum=`cat /recalbox/share/system/upgrade/${file}.sha1 | cut -d ' ' -f 1`
+        if [[ $computedSum != $buildSum ]]; then
+            recallog -e "Checksums differ for ${file}. Aborting upgrade !"
+            rm -rf /recalbox/share/system/upgrade/*
+        fi
+    done
     # percentage
     touch /tmp/upgrade.files
     (
@@ -225,7 +234,7 @@ case "${MODE}" in
 esac
 
 # what about doing an upgrade ?
-if test -e "/recalbox/share/system/upgrade/boot.tar.xz" -a -e "/recalbox/share/system/upgrade/root.tar.xz"
+if test -e "/recalbox/share/system/upgrade/boot.tar.xz" -a -e "/recalbox/share/system/upgrade/root.tar.xz" -a -e "/recalbox/share/system/upgrade/boot.tar.xz.sha1" -a -e "/recalbox/share/system/upgrade/root.tar.xz.sha1"
 then
     # let's go
     scr_init_upgrade
