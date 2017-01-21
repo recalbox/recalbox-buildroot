@@ -235,7 +235,7 @@ then
     for file in $(ls /recalbox/share/system/upgrade/upgrade.*.log) ; do mv "$file" "$file".prereboot ; done
     do_upgrade > /recalbox/share/system/upgrade/upgrade.out.log 2> /recalbox/share/system/upgrade/upgrade.err.log
     if [ $? -eq "0" ]; then
-        # remove to not apply it indefinitly, even if it fails
+        # Remove as the upgrade is done now
         rm "/recalbox/share/system/upgrade/boot.tar.xz" "/recalbox/share/system/upgrade/root.tar.xz"
     fi
     
