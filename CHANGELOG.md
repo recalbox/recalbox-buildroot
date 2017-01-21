@@ -87,6 +87,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Added GNU diffutils
 - Now shows changelog when updating the system
 - Build on gitlab ci
+- Added system.es.hidesystemview option in recalbox.conf to hide system view
 
 ## [4.0.0-beta5] - 2016-08-13hs the ratio issue in mame.
 - Improved pads and gpio support for moonlight
