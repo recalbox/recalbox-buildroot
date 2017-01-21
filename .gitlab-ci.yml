@@ -14,6 +14,7 @@ stages:
     - tail -n 200 build.log
     - mkdir -p dist/${ARCH}
     - cp output/images/recalbox/* dist/${ARCH}
+    - rm -rf output/
     - for file in `ls dist/${ARCH}/`;do sha1sum dist/${ARCH}/${file} > dist/${ARCH}/${file}.sha1; done
     - tar tf dist/${ARCH}/root.tar.xz | sort > dist/${ARCH}/root.list
     - echo "$RECALBOX_VERSION" >> dist/${ARCH}/recalbox.version
