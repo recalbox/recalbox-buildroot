@@ -59,7 +59,7 @@ build odroidxu4:
   script:
     - echo "releasing on archive.recalbox.com/${RELEASE_DIR}/"
     - echo "${RECALBOX_ARCHIVE_SSH_KEY}" > recalbox-archive-key && chmod 400 recalbox-archive-key
-    - test -n "$SKIP_IMAGES" && rm dist/*/output/images/recalbox/*.img
+    - test -n "$SKIP_IMAGES" && rm dist/*/*.img*
     - for arch in `ls dist`; do mkdir -p torelease/$arch/unstable/last/; mv dist/$arch/* torelease/$arch/unstable/last/; done
     - cat deploy/index.html | docker run --rm -i loicmahieu/alpine-envsubst > torelease/index.html
     - docker run --rm -v `pwd`:/share -w /share digitallumberjack/docker-sshd ssh -p 10022 -o StrictHostKeyChecking=no -i recalbox-archive-key $ARCHIVE_SERVER "mkdir -p /recalbox-archive/${RELEASE_DIR}"
@@ -70,8 +70,12 @@ release master:
   only:
     - master
   variables:
-    RELEASE_DIR: '4.1'
-    RELEASE_TYPE: 'unstable'
+    RELEASE_DIR: "4.1"
+    RELEASE_TYPE: "unstable"
+  environment:
+    name: staging
+    url: https://archive.recalbox.com/4.1/
+
 
 release stable:
   <<: *release_definition
@@ -79,8 +83,12 @@ release stable:
   only:
     - tags
   variables:
-    RELEASE_DIR: '4.1'
-    RELEASE_TYPE: 'stable'
+    RELEASE_DIR: "4.1"
+    RELEASE_TYPE: "stable"
+  environment:
+    name: production
+    url: https://archive.recalbox.com/4.1/
+
 
 release for test:
   <<: *release_definition
@@ -91,8 +99,8 @@ release for test:
     - master
   variables:
     RELEASE_DIR: "gitlab/${CI_BUILD_REF_SLUG}"
-    RELEASE_TYPE: 'unstable'
-    SKIP_IMAGES: 'true'
+    RELEASE_TYPE: "unstable"
+    SKIP_IMAGES: "true"
   environment:
     name: review/${CI_BUILD_REF_SLUG}
     on_stop: clean tests from archive
