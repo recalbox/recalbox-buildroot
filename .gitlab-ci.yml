@@ -62,7 +62,8 @@ build odroidxu4:
     - echo "${RECALBOX_ARCHIVE_SSH_KEY}" > recalbox-archive-key && chmod 400 recalbox-archive-key
     - test -n "$SKIP_IMAGES" && rm dist/*/*.img*
     - for arch in `ls dist`; do mkdir -p torelease/$arch/unstable/last/; mv dist/$arch/* torelease/$arch/unstable/last/; done
-    - cat deploy/index.html | docker run --rm -i loicmahieu/alpine-envsubst > torelease/index.html
+    - env | grep "CI_" > envfile
+    - cat deploy/index.html | docker run --rm --env-file envfile -i loicmahieu/alpine-envsubst > torelease/index.html
     - docker run --rm -v `pwd`:/share -w /share digitallumberjack/docker-sshd ssh -p 10022 -o StrictHostKeyChecking=no -i recalbox-archive-key $ARCHIVE_SERVER "mkdir -p /recalbox-archive/${RELEASE_DIR}"
     - docker run --rm -v `pwd`:/share -w /share digitallumberjack/docker-sshd scp -r -P 10022 -o StrictHostKeyChecking=no -i recalbox-archive-key torelease/* $ARCHIVE_SERVER:/recalbox-archive/${RELEASE_DIR}/
 
