@@ -1,7 +1,6 @@
 # Recalbox-roms main package
 source "package/recalbox-romfs/recalbox-romfs/Config.in"
 
-# if BR2_PACKAGE_RECALBOX_ROMFS
 menu "Rom dirs and xml"
 	source "package/recalbox-romfs/recalbox-romfs-amstradcpc/Config.in"
 	source "package/recalbox-romfs/recalbox-romfs-apple2/Config.in"
@@ -57,5 +56,4 @@ menu "Rom dirs and xml"
 	source "package/recalbox-romfs/recalbox-romfs-zx81/Config.in"
 	source "package/recalbox-romfs/recalbox-romfs-zxspectrum/Config.in"
 endmenu
-# endif
 
