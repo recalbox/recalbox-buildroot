@@ -3,9 +3,8 @@
 # BEETLE_PCE
 #
 ################################################################################
-LIBRETRO_BEETLE_PCE_VERSION = a5e649eccab48f10195d454e496208cf793a7000
+LIBRETRO_BEETLE_PCE_VERSION = 0ba4264365b568a63ec70770b8bf3bc32f972d41
 LIBRETRO_BEETLE_PCE_SITE = $(call github,libretro,beetle-pce-fast-libretro,$(LIBRETRO_BEETLE_PCE_VERSION))
-
 
 define LIBRETRO_BEETLE_PCE_BUILD_CMDS
 	CFLAGS="$(TARGET_CFLAGS)" CXXFLAGS="$(TARGET_CXXFLAGS)" \
