@@ -107,6 +107,7 @@ release for test:
 clean tests from archive:
   stage: clean
   when: manual
+  dependencies: []
   only:
     - branches
     - tags
