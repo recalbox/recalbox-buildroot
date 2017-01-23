@@ -11,7 +11,7 @@ extra1="$3"
 extra2="$4"
 arch=`cat /recalbox/recalbox.arch`
 
-recalboxupdateurl="http://archive.recalbox.com/4"
+recalboxupdateurl="http://archive.recalbox.com/updates/v1.0"
 
 preBootConfig() {
     mount -o remount,rw /boot
@@ -271,12 +271,11 @@ fi
 
 if [ "$command" == "canupdate" ];then
 	updatetype="`$systemsetting  -command load -key updates.type`"
-	if test "${updatetype}" != "stable" -a "${updatetype}" != "unstable" -a "${updatetype}" != "beta"
+	if "${updatetype}" = "beta"
 	then
-		# force a default value in case the value is removed or miswritten
 		updatetype="stable"
 	fi
-	available=`wget -qO- ${recalboxupdateurl}/${arch}/${updatetype}/last/recalbox.version`
+	available=`wget -qO- ${recalboxupdateurl}/${updatetype}/${arch}/recalbox.version`
 	if [[ "$?" != "0" ]];then
 		exit 2
 	fi
