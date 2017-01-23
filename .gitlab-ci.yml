@@ -78,10 +78,19 @@ build rpi3 for test:
 .release_template: &release_definition
   stage: release
   script:
-    - echo "releasing on archive.recalbox.com/updates/v1.0/${RELEASE_DIR}/"
+    - echo "releasing on archive.recalbox.com/${RELEASE_DIR}/"
     - echo "${RECALBOX_ARCHIVE_SSH_KEY}" > recalbox-archive-key && chmod 400 recalbox-archive-key
-    - docker run --rm -v `pwd`:/share -w /share digitallumberjack/docker-sshd ssh -p 10022 -o StrictHostKeyChecking=no -i recalbox-archive-key $ARCHIVE_SERVER "mkdir -p /recalbox-archive/updates/v1.0/${RELEASE_DIR}"
-    - docker run --rm -v `pwd`:/share -w /share digitallumberjack/docker-sshd scp -r -P 10022 -o StrictHostKeyChecking=no -i recalbox-archive-key torelease/* $ARCHIVE_SERVER:/recalbox-archive/updates/v1.0/${RELEASE_DIR}/
+    - for arch in `ls dist`; do mkdir -p torelease/$arch/unstable/last/; mv dist/$arch/* torelease/$arch/unstable/last/; done
+    - docker run --rm -v `pwd`:/share -w /share digitallumberjack/docker-sshd ssh -p 10022 -o StrictHostKeyChecking=no -i recalbox-archive-key $ARCHIVE_SERVER "mkdir -p /recalbox-archive/${RELEASE_DIR}"
+    - docker run --rm -v `pwd`:/share -w /share digitallumberjack/docker-sshd scp -r -P 10022 -o StrictHostKeyChecking=no -i recalbox-archive-key torelease/* $ARCHIVE_SERVER:/recalbox-archive/${RELEASE_DIR}/
+
+release master:
+  <<: *release_definition
+  only:
+    - master
+  variables:
+    RELEASE_DIR: '4'
+    RELEASE_TYPE: 'unstable'
 
 release stable:
   <<: *release_definition
@@ -89,7 +98,9 @@ release stable:
   only:
     - tags
   variables:
-    RELEASE_DIR: 'stable'
+    RELEASE_DIR: '4'
+    RELEASE_TYPE: 'stable'
+
 
 release for test:
   <<: *release_definition
@@ -101,6 +112,7 @@ release for test:
     - master
   variables:
     RELEASE_DIR: "gitlab/${CI_BUILD_REF_SLUG}"
+    RELEASE_TYPE: 'unstable'
 
 clean tests from archive:
   stage: clean
@@ -111,7 +123,7 @@ clean tests from archive:
   except:
     - master
   script:
-    - echo "cleaning archive.recalbox.com/updates/v1.0/gitlab/${CI_BUILD_REF_SLUG}"
+    - echo "cleaning archive.recalbox.com/gitlab/${CI_BUILD_REF_SLUG}"
     - echo "${RECALBOX_ARCHIVE_SSH_KEY}" > recalbox-archive-key && chmod 400 recalbox-archive-key
-    - docker run --rm -v `pwd`:/share -w /share digitallumberjack/docker-sshd ssh -p 10022 -o StrictHostKeyChecking=no -i recalbox-archive-key $ARCHIVE_SERVER "rm -rf /recalbox-archive/updates/v1.0/gitlab/${CI_BUILD_REF_SLUG}"
+    - docker run --rm -v `pwd`:/share -w /share digitallumberjack/docker-sshd ssh -p 10022 -o StrictHostKeyChecking=no -i recalbox-archive-key $ARCHIVE_SERVER "rm -rf /recalbox-archive/gitlab/${CI_BUILD_REF_SLUG}"
 
