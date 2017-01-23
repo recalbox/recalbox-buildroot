@@ -21,6 +21,8 @@ define VIRTUALGAMEPADS_INSTALL_TARGET_CMDS
 	cp -r $(@D)/* \
 		$(TARGET_DIR)/usr/node-virtual-gamepads
 
+	mv $(TARGET_DIR)/usr/node-virtual-gamepads/main.js $(TARGET_DIR)/usr/node-virtual-gamepads/virtualgamepads.js
+
 	cd $(TARGET_DIR)/usr/node-virtual-gamepads && mkdir -p node_modules && \
 		$(NPM) install \
 
