@@ -61,7 +61,7 @@ build odroidxu4:
     - echo "releasing on archive.recalbox.com/updates/v1.0/${RELEASE_DIR}/"
     - echo "${RECALBOX_ARCHIVE_SSH_KEY}" > recalbox-archive-key && chmod 400 recalbox-archive-key
     - test -n "$SKIP_IMAGES" && rm dist/*/*.img*
-    - env | grep "CI_" > envfile
+    - env | grep "CI_\|GITLAB" > envfile
     - cat deploy/index.html | docker run --rm --env-file envfile -i loicmahieu/alpine-envsubst > dist/index.html
     - docker run --rm -v `pwd`:/share -w /share digitallumberjack/docker-sshd ssh -p 10022 -o StrictHostKeyChecking=no -i recalbox-archive-key $ARCHIVE_SERVER "mkdir -p /recalbox-archive/updates/v1.0/${RELEASE_DIR}"
     - docker run --rm -v `pwd`:/share -w /share digitallumberjack/docker-sshd scp -r -P 10022 -o StrictHostKeyChecking=no -i recalbox-archive-key dist/* $ARCHIVE_SERVER:/recalbox-archive/updates/v1.0/${RELEASE_DIR}/
