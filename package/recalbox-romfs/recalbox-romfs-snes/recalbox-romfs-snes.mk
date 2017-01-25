@@ -5,7 +5,7 @@
 ################################################################################
 
 # Package generated with :
-# ./scripts/linux/empack.py --system snes --extension '.smc .sfc .SMC .SFC .zip .ZIP .mgd .MGD' --fullname 'Super Nintendo Entertainment System' --platform snes --theme snes libretro:catsfc:BR2_PACKAGE_LIBRETRO_CATSFC libretro:pocketsnes:BR2_PACKAGE_LIBRETRO_POCKETSNES libretro:snes9x_next:BR2_PACKAGE_LIBRETRO_SNES9X_NEXT
+# ./scripts/linux/empack.py --system snes --extension '.smc .sfc .SMC .SFC .zip .ZIP .mgd .MGD' --fullname 'Super Nintendo Entertainment System' --platform snes --theme snes libretro:catsfc:BR2_PACKAGE_LIBRETRO_CATSFC libretro:pocketsnes:BR2_PACKAGE_LIBRETRO_POCKETSNES libretro:snes9x_next:BR2_PACKAGE_LIBRETRO_SNES9X_NEXT libretro:snes9x:BR2_PACKAGE_LIBRETRO_SNES9X
 
 # Name the 3 vars as the package requires
 RECALBOX_ROMFS_SNES_SOURCE = 
@@ -21,7 +21,7 @@ SOURCE_ROMDIR_SNES = $(RECALBOX_ROMFS_SNES_PKGDIR)/roms
 # variables are global across buildroot
 
 
-ifneq ($(BR2_PACKAGE_LIBRETRO_CATSFC)$(BR2_PACKAGE_LIBRETRO_POCKETSNES)$(BR2_PACKAGE_LIBRETRO_SNES9X_NEXT),)
+ifneq ($(BR2_PACKAGE_LIBRETRO_CATSFC)$(BR2_PACKAGE_LIBRETRO_POCKETSNES)$(BR2_PACKAGE_LIBRETRO_SNES9X_NEXT)$(BR2_PACKAGE_LIBRETRO_SNES9X),)
 define CONFIGURE_MAIN_SNES_START
 	echo -e '<system>\n' \
 	'\t<fullname>Super Nintendo Entertainment System</fullname>\n' \
@@ -37,7 +37,7 @@ endef
 RECALBOX_ROMFS_SNES_CONFIGURE_CMDS += $(CONFIGURE_MAIN_SNES_START)
 
 
-ifneq ($(BR2_PACKAGE_LIBRETRO_CATSFC)$(BR2_PACKAGE_LIBRETRO_POCKETSNES)$(BR2_PACKAGE_LIBRETRO_SNES9X_NEXT),)
+ifneq ($(BR2_PACKAGE_LIBRETRO_CATSFC)$(BR2_PACKAGE_LIBRETRO_POCKETSNES)$(BR2_PACKAGE_LIBRETRO_SNES9X_NEXT)$(BR2_PACKAGE_LIBRETRO_SNES9X),)
 define CONFIGURE_SNES_LIBRETRO_START
 	echo -e '\t\t<emulator name="libretro">' >> $(SYSTEM_XML_SNES)
 	echo -e '\t\t\t<cores>' >> $(SYSTEM_XML_SNES)
@@ -59,6 +59,14 @@ define CONFIGURE_SNES_LIBRETRO_CATSFC_DEF
 
 endef
 RECALBOX_ROMFS_SNES_CONFIGURE_CMDS += $(CONFIGURE_SNES_LIBRETRO_CATSFC_DEF)
+endif
+
+ifeq ($(BR2_PACKAGE_LIBRETRO_SNES9X),y)
+define CONFIGURE_SNES_LIBRETRO_SNES9X_DEF
+	echo -e '\t\t\t\t<core>snes9x</core>' >> $(SYSTEM_XML_SNES)
+
+endef
+RECALBOX_ROMFS_SNES_CONFIGURE_CMDS += $(CONFIGURE_SNES_LIBRETRO_SNES9X_DEF)
 endif
 
 ifeq ($(BR2_PACKAGE_LIBRETRO_POCKETSNES),y)
