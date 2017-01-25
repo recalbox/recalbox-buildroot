@@ -3,7 +3,7 @@
 # VIRTUALGAMEPADS
 #
 ################################################################################
-VIRTUALGAMEPADS_VERSION = ea4257ccd434a7bfb61dc6f5a0affed23b5f5e4f
+VIRTUALGAMEPADS_VERSION = a4317690131bea8ed9d7e89e09588e2ce1a646fc
 VIRTUALGAMEPADS_BRANCH = recalbox
 VIRTUALGAMEPADS_SITE = $(call github,miroof,node-virtual-gamepads,$(VIRTUALGAMEPADS_BRANCH),$(VIRTUALGAMEPADS_VERSION))
 VIRTUALGAMEPADS_DEPENDENCIES = nodejs
