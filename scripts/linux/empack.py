@@ -234,7 +234,7 @@ class EmPack:
                 raise
         else:
             print "{} already exists ... Are you sure of what you're doing ? Exiting ...".format(self._RomsDir)
-            # sys.exit(1)
+            sys.exit(1)
 
         if self._SingleMode:
             skeletonFile = 'package/recalbox-romfs/recalbox-romfs_single_emulator.skeleton'
@@ -349,7 +349,7 @@ class EmPack:
         print "\n  * Add a source to package/recalbox-romfs/Config.in :"
         print " source {}/Config.in".format(self._PackageDir)
         print "\n  * Add dependencies to package/recalbox-romfs/recalbox-romfs/Config.in :"
-        print "\n\t  || {} \\".format(" \\\n\t  || ".join(self._BRVarsList))
+        print "\n\t  || BR2_PACKAGE_RECALBOX_ROMFS_{}".format(self._SystemUpper)
         print "\n  * Add to the emulators/cores Config.in:\n"
         print "\tselect BR2_PACKAGE_RECALBOX_ROMFS_{}".format(self._SystemUpper)
 
