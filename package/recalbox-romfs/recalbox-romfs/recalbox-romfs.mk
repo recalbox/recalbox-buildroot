@@ -9,6 +9,7 @@ RECALBOX_ROMFS_SITE =
 RECALBOX_ROMFS_INSTALL_STAGING = NO
 
 ES_SYSTEMS = $(@D)/es_systems.cfg
+ES_SYSTEMS_TMP = $(ES_SYSTEMS).tmp
 TARGET_ES_SYSTEMS_DIR = $(TARGET_DIR)/recalbox/share_init/system/.emulationstation
 TARGET_ROMDIR = $(TARGET_DIR)/recalbox/share_init/
 
@@ -23,16 +24,17 @@ CONFIGGEN_STD_CMD = python /usr/lib/python2.7/site-packages/configgen/emulatorla
 # Init the es_systems.cfg
 # Keep the empty line as there are several commands to chain at configure
 define RECALBOX_ROMFS_ES_SYSTEMS
-	echo '<?xml version="1.0"?>' > $(ES_SYSTEMS)
-	echo '<systemList>' >>  $(ES_SYSTEMS)
-	cat $(@D)/../recalbox-romfs-*/*.xml >> $(ES_SYSTEMS)
+	echo '<?xml version="1.0"?>' > $(ES_SYSTEMS_TMP)
+	echo '<systemList>' >>  $(ES_SYSTEMS_TMP)
+	cat $(@D)/../recalbox-romfs-*/*.xml >> $(ES_SYSTEMS_TMP)
 	echo -e '<system>\n' \
 		"\t<fullname>Favorites</fullname>\n" \
 		'\t<name>favorites</name>\n' \
 		"\t<command>$(CONFIGGEN_STD_CMD)</command>\n" \
 		"\t<theme>favorites</theme>\n" \
 	"</system>\n" \
-	'</systemList>' >>  $(ES_SYSTEMS)
+	'</systemList>' >>  $(ES_SYSTEMS_TMP)
+	xmllint --format $(ES_SYSTEMS_TMP) > $(ES_SYSTEMS)
 	
 endef
 RECALBOX_ROMFS_CONFIGURE_CMDS += $(RECALBOX_ROMFS_ES_SYSTEMS)
