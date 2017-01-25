@@ -271,7 +271,7 @@ fi
 
 if [ "$command" == "canupdate" ];then
 	updatetype="`$systemsetting  -command load -key updates.type`"
-	if "${updatetype}" = "beta"
+	if test "${updatetype}" = "beta"
 	then
 		updatetype="stable"
 	fi
