@@ -368,7 +368,7 @@ if __name__ == '__main__':
 
     ConfigEm = EmPack(args.system, args.extensions, args.packageDetails, fullname = args.fullname, platform = args.platform, theme = args.theme)
     print ConfigEm
-    ConfigEm.writeconfigin()
     ConfigEm.writemakefile()
+    ConfigEm.writeconfigin()
     ConfigEm.copyoverlaydir()
     ConfigEm.finalword()
