@@ -195,6 +195,7 @@ menu "Recalbox"
 	source "package/recalbox-initramfs/Config.in"
 	source "package/recalbox-x86_64_efi/Config.in"
 	source "package/rgb-pi/Config.in"
+	source "package/tft-waveshare/Config.in"
 menu "Emulationstation"
         source "package/recalbox-emulationstation2/Config.in"
         source "package/emulation-station/Config.in"
@@ -317,6 +318,9 @@ menu "Utils"
         source "package/megatools/Config.in"
         source "package/jstest2/Config.in"
         source "package/libcapsimage/Config.in"
+endmenu
+menu "Small TFT Screen"
+        source "package/rpi-fbcp/Config.in"
 endmenu
 endmenu
 
