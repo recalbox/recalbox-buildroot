@@ -20,8 +20,7 @@ case "$1" in
     fi
     
     echo "Starting virtual-gamepads server"
-    cd /usr/node-virtual-gamepads/ 
-    node virtualgamepads.js &
+    cd /usr/node-virtual-gamepads/ && PORT=8080 node virtualgamepads.js &
     ;;
   stop)
     echo -n "Stoping virtual-gamepads server"
