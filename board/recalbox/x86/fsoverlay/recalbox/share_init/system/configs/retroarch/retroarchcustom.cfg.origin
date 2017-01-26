@@ -30,7 +30,7 @@ savefile_directory = /recalbox/share/saves/
 extraction_directory = /recalbox/share/extractions/
 cheat_database_path = /recalbox/share_init/cheats/cht/
 cheat_settings_path = /recalbox/share/cheats/saves/
-video_font_path = /recalbox/share_init/system/.emulationstation/themes/recalbox/data/
+video_font_path = /recalbox/share_init/system/.emulationstation/themes/recalbox/data/ubuntu_condensed.ttf
 
 fastforward_ratio = -1.0
 input_autodetect_enable = false
