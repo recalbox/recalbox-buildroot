@@ -89,10 +89,12 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Patched xpad driver to support Xbox One S / Elite controllers in USB mode
 - Patched xpad driver to fix the blinking xbox leds
 - Build on gitlab ci
-- Added system.es.hidesystemview option in recalbox.conf to hide system view
-- Added system.es.selectedsystem option in recalbox.conf to select a system on boot
-- Added system.es.bootongamelist to boot on the system gamelist
+- Added emulationstation.hidesystemview option in recalbox.conf to hide system view
+- Added emulationstation.selectedsystem option in recalbox.conf to select a system on boot
+- Added emulationstation.bootongamelist to boot on the system gamelist
+- Added emulationstation.gamelistonly to improve boot time
 - Added Japanese, Russian and Hungarian languages
+
 
 ## [4.0.0-beta5] - 2016-08-13hs the ratio issue in mame.
 - Improved pads and gpio support for moonlight
