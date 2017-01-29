@@ -18,7 +18,7 @@ case "$1" in
       then
 	  exit 1
       fi
-      mount -o ro /boot || exit 1
+      mount "${BOOTPART}" -o ro /boot || exit 1
       # Update /boot/config.txt if needed
       if shouldUpdate
       then
