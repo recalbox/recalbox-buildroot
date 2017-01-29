@@ -71,7 +71,7 @@ release master:
   only:
     - master
   variables:
-    RELEASE_DIR: "unstable"
+    RELEASE_DIR: "unstable-gh"
   environment:
     name: staging
     url: https://archive.recalbox.com/updates/v1.0/unstable/
@@ -83,7 +83,7 @@ release stable:
   only:
     - tags
   variables:
-    RELEASE_DIR: "stable"
+    RELEASE_DIR: "stable-gh"
   environment:
     name: production
     url: https://archive.recalbox.com/updates/v1.0/stable/
@@ -97,7 +97,7 @@ release for test:
   except:
     - master
   variables:
-    RELEASE_DIR: "gitlab/${CI_BUILD_REF_SLUG}"
+    RELEASE_DIR: "gitlab-gh/${CI_BUILD_REF_SLUG}"
     SKIP_IMAGES: "true"
   environment:
     name: review/${CI_BUILD_REF_SLUG}
