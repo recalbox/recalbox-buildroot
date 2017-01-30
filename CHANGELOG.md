@@ -4,6 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unrelease][unreleased]
 - add tft waveshare 3.2 and 3.5 overlays + fbcp program to support them
+- new web manager
 - add rgb-pi overlay
 - checksum on upgrades, progression percentage much more accurate
 - Bump to Bump rpi-userland 8e84b9003d8259472f9c79b385443b1b4975203e and rpi-firmware b365edad4e75126fb9bfee2325652758407e4f74 to change be able to change video résolution on the fly via the vcgencmd command. This will be very useful the get pixel perfect on rgb screen
@@ -92,12 +93,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Patched xpad driver to support Xbox One S / Elite controllers in USB mode
 - Patched xpad driver to fix the blinking xbox leds
 - Build on gitlab ci
+- Added emulationstation.hidesystemview option in recalbox.conf to hide system view
+- Added emulationstation.selectedsystem option in recalbox.conf to select a system on boot
+- Added emulationstation.bootongamelist to boot on the system gamelist
+- Added emulationstation.gamelistonly to improve boot time
 - Bumped libretro cores on last version
-- Added system.es.hidesystemview option in recalbox.conf to hide system view
-- Added system.es.selectedsystem option in recalbox.conf to select a system on boot
-- Added system.es.bootongamelist to boot on the system gamelist
 - Added Japanese, Russian and Hungarian languages
 - Bumped virtualgamepads version - virtualkeyboard now available
+- Add usb encoder 3H-Dual-Arcade, Mayflash dreamcast adapter
+
 
 ## [4.0.0-beta5] - 2016-08-13hs the ratio issue in mame.
 - Improved pads and gpio support for moonlight
