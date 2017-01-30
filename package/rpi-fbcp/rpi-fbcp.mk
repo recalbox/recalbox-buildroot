@@ -20,4 +20,8 @@ define RPI_FBCP_INSTALL_TARGET_CMDS
 	$(INSTALL) -m 0755 -D $(@D)/fbcp $(TARGET_DIR)/usr/bin 
 endef 
 
+define RPI_FBCP_INSTALL_INIT_SYSV
+	$(INSTALL) -m 0755 -D package/rpi-fbcp/S13fbcp $(TARGET_DIR)/etc/init.d/S13fbcp
+endef
+
 $(eval $(cmake-package))
