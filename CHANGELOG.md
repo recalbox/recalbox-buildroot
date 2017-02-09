@@ -8,6 +8,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - new web manager
 - add tft waveshare 3.2 and 3.5 overlays + fbcp program to support them
 - add rgb-pi overlay
+- fixed rgb-pi overlay
 - checksum on upgrades, progression percentage much more accurate
 - Bump to Bump rpi-userland 8e84b9003d8259472f9c79b385443b1b4975203e and rpi-firmware b365edad4e75126fb9bfee2325652758407e4f74 to change be able to change video résolution on the fly via the vcgencmd command. This will be very useful the get pixel perfect on rgb screen
 - Fixing BT firmware copy for Realtek BT devices (81xx 87xx and 88xx)
