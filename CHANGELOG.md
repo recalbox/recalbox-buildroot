@@ -4,6 +4,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unrelease][unreleased]
 - add tft waveshare 3.2 and 3.5 overlays + fbcp program to support them
+- add pwm-audio-pi-zero overlay to get audio thanks to PWMs through GPIO Pins 18 and 13 on an Pi Zero equivalent to dtoverlay=pwm-2chan,pin=18,func=2,pin2=13,func2=4
 - new web manager
 - add tft waveshare 3.2 and 3.5 overlays + fbcp program to support them
 - add rgb-pi overlay
