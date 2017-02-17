@@ -48,3 +48,5 @@ input_enable_hotkey_btn = "16"
 
 input_enable_hotkey = "escape"
 input_exit_emulator = "escape"
+
+menu_swap_ok_cancel_buttons = "true"
